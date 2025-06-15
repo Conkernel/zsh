@@ -5,15 +5,9 @@
 
 !/README
 !/.gitignore
-!/zsh/
-!/zsh/*
-!/profile.d/
-!/profile.d/*
-!/bat/
-!/bat/*
-!/exa/
-!/exa/*
+!/zsh/**
+!/profile.d/**
+!/bat/**
 !/starship.toml
-
 
 !*/
