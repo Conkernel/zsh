@@ -28,7 +28,7 @@ fi
 # 3. Si llegamos aquí, el usuario es root y no se usó sudo.
 echo "¡Verificación de root exitosa! Estás ejecutando como el usuario root directamente."
 
-sudo apt install zsh mlocate bat git curl xdg-utils ripgrep libnotify-bin     -y
+sudo apt install zsh bat git curl xdg-utils ripgrep libnotify-bin     -y
 [ -d /etc/zsh ] && mv /etc/zsh /etc/zsh.old 
 mv zsh /etc/
 [ -d /etc/bat ] && mv /etc/bat /etc/bat.old 
