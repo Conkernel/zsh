@@ -29,9 +29,12 @@ fi
 echo "¡Verificación de root exitosa! Estás ejecutando como el usuario root directamente."
 
 sudo apt install zsh bat git curl xdg-utils ripgrep libnotify-bin     -y
+cd /tmp/
+git clone https://github.com/conkernel/zsh
+cd /tmp/zsh
 [ -d /etc/zsh ] && mv /etc/zsh /etc/zsh.old 
 mv zsh /etc/
 [ -d /etc/bat ] && mv /etc/bat /etc/bat.old 
 mv bat /etc/
 curl -sS https://starship.rs/install.sh | sh
-exit 0
+zsh
