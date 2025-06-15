@@ -1,0 +1,102 @@
+
+HISTFILE=~/.histfile
+HISTSIZE=10000
+SAVEHIST=10000
+bindkey -e
+zstyle :compinstall filename '$HOME/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+
+
+
+bindkey '^H' backward-delete-char #es necesario activar el binding de ^H en la aplicación de terminal (mobaxterm)
+bindkey '^[[3~'   delete-char # borra caracter actual
+bindkey '^[[H'    beginning-of-line
+bindkey '^?' backward-kill-word
+bindkey '^[[F'    end-of-line
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word
+autoload -Uz up-line-or-beginning-search
+autoload -Uz down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+#tecla arriba:
+bindkey '^[[A'    up-line-or-beginning-search
+#tecla abajo:
+bindkey '^[[B'    down-line-or-beginning-search
+# tecla av pag
+bindkey '^[[6~'   up-line-or-beginning-search
+# tecla re pag
+bindkey '^[[5~'   down-line-or-beginning-search
+bindkey '^[[Z'    undo                               # shift + tab undo last action
+
+fpath=(/etc/zsh/plugins/zsh-completions $fpath)
+
+
+# zoptions global ################
+if [[ -f /etc/zsh/zoptions ]]; then
+  source "/etc/zsh/zoptions"
+fi
+# zfunctions global
+if [[ -f /etc/zsh/zfunctions ]]; then
+  source "/etc/zsh/zfunctions"
+fi
+# zprofile global
+if [[ -f /etc/zsh/zprofile ]]; then
+  source "/etc/zsh/zprofile"
+fi
+# zaliases global
+if [[ -f /etc/zsh/zaliases ]]; then
+  source "/etc/zsh/zaliases"
+fi
+# zoptions local ##################
+if [[ -f $ZDOTDIR/.zoptions ]]; then
+  source "$ZDOTDIR/.zoptions"
+fi
+# zfunctions local
+if [[ -f $ZDOTDIR/.zfunctions ]]; then
+  source "$ZDOTDIR/.zfunctions"
+fi
+#zprofile local
+if [[ -f $ZDOTDIR/.zprofile ]]; then
+  source "$ZDOTDIR/.zprofile"
+fi
+# zaliases local
+if [[ -f $ZDOTDIR/.zaliases ]]; then
+  source "$ZDOTDIR/.zaliases"
+fi
+
+## PLUGINS_:
+plugins=(git zsh-syntax-highlighting fzf-tab zsh-history-substring-search)
+
+# FZF - Control+R, Control+T, Alt+c
+[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+[ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
+[ -f /etc/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh ] && source /etc/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
+
+# Ripgrep (grep vitaminado)
+export RIPGREP_OPTS="--ignore-dir .git --ignore-file .dockerignore"
+
+# Exa:
+export EXA_DEFAULT_OPTIONS="--long --header --git --icons --group-directories-first"
+
+# Starship:
+# Inicializar Starship si el binario existe
+if command -v starship &>/dev/null; then
+    eval "$(starship init zsh)"
+fi
+
+# zsh-syntax-highñlighting:
+source /etc/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# zsh-autosuggestions
+source /etc/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# zsh-history
+source /etc/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+

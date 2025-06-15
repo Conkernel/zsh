@@ -1,0 +1,13 @@
+
+sudo apt install zsh mlocate bat git curl xdg-utils ripgrep exa libnotify-bin     -y
+mkdir ~/.config/zsh -p
+
+sudo mkdir -p /etc/bat/
+
+
+# Starship
+curl -sS https://starship.rs/install.sh | sh
+
+
+mkdir -p ~/.local/share/zsh/plugins
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.local/share/zsh/plugins/zsh-syntax-highlighting

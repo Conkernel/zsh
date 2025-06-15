@@ -1,0 +1,19 @@
+
+# Ignora todo el contenido del directorio /etc
+*
+# Excepciones
+
+!/README
+!/.gitignore
+!/zsh/
+!/zsh/*
+!/profile.d/
+!/profile.d/*
+!/bat/
+!/bat/*
+!/exa/
+!/exa/*
+!/starship.toml
+
+
+!*/
