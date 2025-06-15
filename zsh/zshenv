@@ -13,3 +13,6 @@ export PS1="%{%F{226}%}%n%{%F{220}%}@%{%F{214}%}%m %{%F{33}%}%1~ %{%f%}$ "
 export RPROMPT="%D %T"
 
 export STARSHIP_CONFIG="/etc/starship.toml"
+
+
+source /etc/zsh/zaliases
