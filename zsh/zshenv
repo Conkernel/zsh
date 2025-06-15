@@ -18,3 +18,4 @@ export STARSHIP_CONFIG="/etc/starship.toml"
 source /etc/zsh/zaliases
 source /etc/zsh/zprofile
 source /etc/zsh/zoptions
+source /etc/zsh/zfunctions
