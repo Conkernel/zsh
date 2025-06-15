@@ -1,12 +1,10 @@
 
-sudo apt install zsh mlocate bat git curl xdg-utils ripgrep exa libnotify-bin     -y
+-Descargar install.sh en el equipo en el que se quiera instalar zsh
+- Ejecutar como root
+
+# Ejemplo usando un servidor web para lanzar la instalación:
+
+wget -qO- http://10.0.0.127/install.sh | sh
 
 
-
-[ -f /etc/bat ] && mv /etc/bat /etc/bat.old 
-sudo mv bat /etc/
-
-[ -f /etc/zsh ] && mv /etc/zsh /etc/zsh.old 
-mv etc /etc/
-
-curl -sS https://starship.rs/install.sh | sh
+## Se harán backups de los directorios /etc/zsh y /etc/bat en caso de existir previamente
