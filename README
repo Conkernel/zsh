@@ -9,7 +9,7 @@ wget -qO- http://10.0.0.127/install.sh | sh
 o
 
 
-wget https://raw.githubusercontent.com/Conkernel/zsh/fb95bc6d47876f61ac325ed5cc7657c45c90ac91/install.sh
+wget https://raw.githubusercontent.com/Conkernel/zsh/fb95bc6d47876f61ac325ed5cc7657c45c90ac91/install.sh | sh
 
 
 ## Se harán backups de los directorios /etc/zsh y /etc/bat en caso de existir previamente
