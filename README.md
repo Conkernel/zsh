@@ -16,7 +16,7 @@ rm ~/powerlevel10k/.git -rf
 
 rm ~/.fzf/.git -rf
 
-sudo chown -R oloco:oloco /home/bash/.config/zsh
+sudo chown -R bash:bash /home/bash/.config/zsh
 
 sudo chmod +x ~/.config/zsh/install.sh
 
