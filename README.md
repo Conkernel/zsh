@@ -11,4 +11,8 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 
 
 rm ~/powerlevel10k/.git -rf
+
 rm ~/.fzf/.git -rf
+
+
+chmod +x ~/.config/zsh/install.sh

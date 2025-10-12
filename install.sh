@@ -1,6 +1,7 @@
 # El UID (User ID) 0 siempre corresponde al usuario root.
 if [ "$(id -u)" -ne 0 ]; then
     printf  "No estás ejecutando el script como el usuario root.\n\n"
+    exit 1
 fi
 
 # ==============================================================================
