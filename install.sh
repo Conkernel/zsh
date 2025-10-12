@@ -85,7 +85,6 @@ fi
 sudo tee -a /etc/zsh/zshrc << EOF
 ZSH_RC_USER="${HOME}/.config/zsh/.zshenv"
 if [ -f "$ZSH_RC_USER" ]; then
-    # Carga (source) el archivo de configuración local
     source "$ZSH_RC_USER"
 fi
 EOF
