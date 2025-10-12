@@ -66,6 +66,9 @@ fi
 
 cd /tmp/zsh || printf "No se pudo cambiar al directorio /tmp/zsh/ \n\n"
 
+
+
+
 # Copiar configuración de Zsh
 printf "Copiando configuración de Zsh...\n\n"
 if [ -d /etc/zsh ]; then
@@ -75,6 +78,22 @@ if [ -d /etc/zsh ]; then
         rm -rf /etc/zsh.old
     fi
     cp -R /etc/zsh /etc/zsh.old
+    sudo tee -a /etc/zsh/zshrc << EOF
+    ZSH_RC_USER="${HOME}/.config/zsh/.zshenv"
+    if [ -f "$ZSH_RC_USER" ]; then
+        # Carga (source) el archivo de configuración local
+        source "$ZSH_RC_USER"
+    fi
+    EOF    
+else
+    mkdir -p /etc/zsh
+    sudo tee -a /etc/zsh/zshrc << EOF
+    ZSH_RC_USER="${HOME}/.config/zsh/.zshenv"
+    if [ -f "$ZSH_RC_USER" ]; then
+        # Carga (source) el archivo de configuración local
+        source "$ZSH_RC_USER"
+    fi
+EOF
 fi
 
 # Mover configuración de Bat
@@ -88,13 +107,7 @@ fi
 
 
 
-sudo tee -a /etc/zsh/zshrc << EOF
-ZSH_RC_USER="${HOME}/.config/zsh/.zshenv"
-if [ -f "$ZSH_RC_USER" ]; then
-    # Carga (source) el archivo de configuración local
-    source "$ZSH_RC_USER"
-fi
-EOF
+
 
 
 
