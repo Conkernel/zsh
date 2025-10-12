@@ -52,3 +52,6 @@ export LC_TIME="es_ES.UTF-8"
 # Por defecto, $PATH siempre contendrá lo mismo que haya en $path, pero se define en un array, que es más cómod y poderoso. Por eso no necesitamos definir $PATH aquí, sólo $path:
 typeset -U path
 path=(/opt/microsoft/msedge/ $path)
+
+source $ZDOTDIR/.zshrc
+source $ZDOTDIR/.zaliases
