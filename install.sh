@@ -1,21 +1,6 @@
-#!/bin/bash
-
-# Este script verifica y obliga a que sea ejecutado directamente como el usuario root.
-# No permitirá la ejecución si se usa 'sudo' por un usuario normal.
-
-# Función para mostrar un mensaje de error y salir
-exit_with_error() {
-    echo "ERROR: $1" >&2
-    echo "Este script debe ejecutarse DIRECTAMENTE como el usuario 'root'." >&2
-    echo "Ejemplo: sudo su -c \"$(readlink -f "$0")\"" >&2
-    echo "         o, si ya eres root: $(readlink -f "$0")" >&2
-    exit 1
-}
-
-# 1. Comprobar si el UID es 0 (root)
 # El UID (User ID) 0 siempre corresponde al usuario root.
 if [ "$(id -u)" -ne 0 ]; then
-    exit_with_error "No estás ejecutando el script como el usuario root."
+    printf  "No estás ejecutando el script como el usuario root.\n\n"
 fi
 
 # ==============================================================================
@@ -32,21 +17,21 @@ PACKAGE_FOR_LS="exa" # Valor por defecto
 case "$OS_NAME" in
     debian)
         PACKAGE_FOR_LS="exa"
-        echo "Sistema detectado: Debian. Usando 'exa' para la instalación."
+        printf "Sistema detectado: Debian. Usando 'exa' para la instalación.\n\n"
         ;;
     ubuntu)
         PACKAGE_FOR_LS="eza"
-        echo "Sistema detectado: Ubuntu. Usando 'eza' para la instalación."
+        printf "Sistema detectado: Ubuntu. Usando 'eza' para la instalación.\n\n"
         ;;
     *)
-        echo "Sistema no reconocido como Debian o Ubuntu. Usando 'exa' como predeterminado."
+        printf "Sistema no reconocido como Debian o Ubuntu. Usando 'exa' como predeterminado.\n\n"
         ;;
 esac
 
 # ==============================================================================
 # Instalación de paquetes
 # ==============================================================================
-echo "Instalando paquetes esenciales..."
+printf "Instalando paquetes esenciales...\n\n"
 sudo apt update -y # Asegurarse de que los índices de paquetes estén actualizados
 
 # Construyendo la lista de paquetes dinámicamente
@@ -56,56 +41,69 @@ sudo apt install $APT_PACKAGES -y
 
 # Verificar si la instalación de apt fue exitosa
 if [ $? -ne 0 ]; then
-    echo "ERROR: Falló la instalación de paquetes APT. Por favor, revisa los errores." >&2
+    printf "ERROR: Falló la instalación de paquetes APT. Por favor, revisa los errores.\n\n" >&2
     exit 1
 fi
 
-echo "Paquetes instalados correctamente."
+printf "Paquetes instalados correctamente.\n\n"
 
 # ==============================================================================
 # Descarga y configuración de Zsh y Bat (de tu repositorio)
 # ==============================================================================
-echo "Descargando y configurando zsh y bat de tu repositorio..."
-cd /tmp/ || exit_with_error "No se pudo cambiar al directorio /tmp/"
+printf "Descargando y configurando zsh y bat de tu repositorio...\n\n"
+cd /tmp/ || printf "No se pudo cambiar al directorio /tmp/ \n\n"
 
 # Clonar el repositorio
-if git clone https://github.com/conkernel/zsh; then
-    echo "Repositorio conkernel/zsh clonado exitosamente."
+git clone https://github.com/conkernel/zsh
+if [ $? -ne 0 ]; then
+    printf "ERROR: Falló la descarga del repo git.\n\n" >&2
 else
-    exit_with_error "Falló la clonación del repositorio conkernel/zsh."
+    printf "Repositorio conkernel/zsh clonado exitosamente.\n\n"
 fi
 
-cd /tmp/zsh || exit_with_error "No se pudo cambiar al directorio /tmp/zsh/"
+cd /tmp/zsh || printf "No se pudo cambiar al directorio /tmp/zsh/ \n\n"
 
 # Mover configuración de Zsh
-echo "Moviendo configuración de Zsh..."
+printf "Moviendo configuración de Zsh...\n\n"
 if [ -d /etc/zsh ]; then
-    echo "Copia de seguridad de /etc/zsh en /etc/zsh.old"
+    printf "Copia de seguridad de /etc/zsh en /etc/zsh.old... \n\n"
     mv /etc/zsh /etc/zsh.old
 fi
-if mv zsh /etc/; then
-    echo "Configuración de Zsh movida a /etc/zsh."
+
+if [ -d /etc/zsh.old ]; then
+    printf "Configuración de Zsh movida a /etc/zsh.\n\n"
 else
-    exit_with_error "Falló el movimiento de la configuración de Zsh a /etc/."
+    printf "Falló el movimiento de la configuración de Zsh a /etc/.\n\n"
 fi
 
 # Mover configuración de Bat
-echo "Moviendo configuración de Bat..."
+printf "Moviendo configuración de Bat...\n\n"
 if [ -d /etc/bat ]; then
-    echo "Copia de seguridad de /etc/bat en /etc/bat.old"
-    mv /etc/bat /etc/bat.old
-fi
-if mv bat /etc/; then
-    echo "Configuración de Bat movida a /etc/bat."
+    printf "Copia de seguridad de /etc/bat en /etc/bat.old \n\n"
+    mv -f /etc/bat /etc/bat.old
 else
-    exit_with_error "Falló el movimiento de la configuración de Bat a /etc/."
+    printf "No existe configuración de bat previa.\n\n"
 fi
+
+
+
+
+
+sudo tee -a /etc/zsh/zshrc << EOF
+ZSH_RC_USER="${HOME}/.config/zsh/.zshenv"
+if [ -f "$ZSH_RC_USER" ]; then
+    # Carga (source) el archivo de configuración local
+    source "$ZSH_RC_USER"
+fi
+EOF
+
+
 
 
 # ==============================================================================
 # Finalización
 # ==============================================================================
-echo "Configuración inicial completa. Iniciando Zsh..."
+printf "Configuración inicial completa. Iniciando Zsh... \n\n"
 zsh
 
 exit 0
