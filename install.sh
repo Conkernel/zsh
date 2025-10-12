@@ -82,13 +82,12 @@ else
     mkdir -p /etc/zsh
 fi
 
-sudo tee -a /etc/zsh/zshrc << EOF
+sudo tee -a /etc/zsh/zshrc << 'EOF'
 ZSH_RC_USER="${HOME}/.config/zsh/.zshenv"
 if [ -f "$ZSH_RC_USER" ]; then
     source "$ZSH_RC_USER"
 fi
 EOF
-
 
 # Mover configuración de Bat
 printf "Moviendo configuración de Bat...\n\n"
