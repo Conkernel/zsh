@@ -16,3 +16,10 @@ rm ~/.fzf/.git -rf
 
 
 chmod +x ~/.config/zsh/install.sh
+
+
+# -.-
+
+sudo ~/.config/zsh/install.sh
+
+# -.-
