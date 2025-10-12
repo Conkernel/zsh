@@ -75,26 +75,21 @@ if [ -d /etc/zsh ]; then
     printf "Copia de seguridad de /etc/zsh en /etc/zsh.old... \n\n"
     if [ -d /etc/zsh.old ]; then
         printf "El directorio /etc/zsh.old ya existe. Eliminándolo para evitar conflictos.\n\n"
-        rm -rf /etc/zsh.old
+        sudo rm -rf /etc/zsh.old
     fi
-    cp -R /etc/zsh /etc/zsh.old
-    sudo tee -a /etc/zsh/zshrc << EOF
-    ZSH_RC_USER="${HOME}/.config/zsh/.zshenv"
-    if [ -f "$ZSH_RC_USER" ]; then
-        # Carga (source) el archivo de configuración local
-        source "$ZSH_RC_USER"
-    fi
-    EOF    
+    sudo cp -R /etc/zsh /etc/zsh.old
 else
     mkdir -p /etc/zsh
-    sudo tee -a /etc/zsh/zshrc << EOF
-    ZSH_RC_USER="${HOME}/.config/zsh/.zshenv"
-    if [ -f "$ZSH_RC_USER" ]; then
-        # Carga (source) el archivo de configuración local
-        source "$ZSH_RC_USER"
-    fi
-EOF
 fi
+
+sudo tee -a /etc/zsh/zshrc << EOF
+ZSH_RC_USER="${HOME}/.config/zsh/.zshenv"
+if [ -f "$ZSH_RC_USER" ]; then
+    # Carga (source) el archivo de configuración local
+    source "$ZSH_RC_USER"
+fi
+EOF
+
 
 # Mover configuración de Bat
 printf "Moviendo configuración de Bat...\n\n"
