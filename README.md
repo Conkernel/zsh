@@ -1,0 +1,14 @@
+mkdir ~/.config/zsh -p
+
+
+echo "" > ~/.zshrc
+
+
+git clone https://github.com/Conkernel/zsh.git ~/.config/zsh
+
+
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+
+
+rm ~/powerlevel10k/.git -rf
+rm ~/.fzf/.git -rf
