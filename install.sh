@@ -4,6 +4,7 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
+
 # ==============================================================================
 # Detección del Sistema Operativo para la instalación de paquetes
 # ==============================================================================
@@ -69,12 +70,6 @@ printf "Moviendo configuración de Zsh...\n\n"
 if [ -d /etc/zsh ]; then
     printf "Copia de seguridad de /etc/zsh en /etc/zsh.old... \n\n"
     mv /etc/zsh /etc/zsh.old
-fi
-
-if [ -d /etc/zsh.old ]; then
-    printf "Configuración de Zsh movida a /etc/zsh.\n\n"
-else
-    printf "Falló el movimiento de la configuración de Zsh a /etc/.\n\n"
 fi
 
 # Mover configuración de Bat
