@@ -1,0 +1,17 @@
+# Tema de color por defecto (ej. 'TwoDark', 'GitHub', 'Dracula')
+--theme="TwoDark"
+
+# Estilo de salida por defecto (líneas, grid, git, header, changes, plain)
+--style="full"
+
+# Número de espacios que representan una tabulación
+--tabs=4
+
+# Deshabilitar la paginación para archivos muy pequeños (útil si prefieres ver todo en la terminal)
+# --paging=never
+
+# Para paginar solo cuando la salida es más grande que la terminal (comportamiento por defecto)
+--paging=auto
+
+# Excluir archivos binarios (ya es el default, pero puedes forzarlo)
+# --no-binary

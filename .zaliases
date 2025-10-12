@@ -1,0 +1,26 @@
+alias ll='ls -lah --color=auto'
+alias gc='git commmit'
+alias gcm='git commit -m'
+
+# Ripgrep (grep vitaminado)
+# Alias para ripgrep (opcional, si quieres atajos)
+alias rg='rg --color=auto' # Asegura colores siempre
+alias rgl='rg --files-with-matches' # Listar archivos con coincidencias
+alias rgp='rg --pretty' # Salida bonita
+alias grep='rg'
+# Configuración por defecto de ripgrep (opcional, si usas .ripgreprc no es necesario aquí)
+# O usa un archivo ~/.ripgreprc para estas opciones
+
+# batcat:
+alias bat='batcat'
+alias cat='bat'
+
+# exa:
+# Reemplazar ls con exa
+alias ls='exa'
+# Alias para listado largo (l)
+alias ll='exa -l --header --git --icons --group-directories-first'
+# Alias para listado largo con todos los archivos (la)
+alias la='exa -la --header --git --icons --group-directories-first'
+# Alias para vista de árbol (lt)
+alias lt='exa -T'
