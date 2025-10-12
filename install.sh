@@ -1,3 +1,4 @@
+set +x
 # El UID (User ID) 0 siempre corresponde al usuario root.
 if [ "$(id -u)" -ne 0 ]; then
     printf  "No estás ejecutando el script como el usuario root.\n\n"
@@ -65,11 +66,15 @@ fi
 
 cd /tmp/zsh || printf "No se pudo cambiar al directorio /tmp/zsh/ \n\n"
 
-# Mover configuración de Zsh
-printf "Moviendo configuración de Zsh...\n\n"
+# Copiar configuración de Zsh
+printf "Copiando configuración de Zsh...\n\n"
 if [ -d /etc/zsh ]; then
     printf "Copia de seguridad de /etc/zsh en /etc/zsh.old... \n\n"
-    mv /etc/zsh /etc/zsh.old
+    if [ -d /etc/zsh.old ]; then
+        printf "El directorio /etc/zsh.old ya existe. Eliminándolo para evitar conflictos.\n\n"
+        rm -rf /etc/zsh.old
+    fi
+    cp -R /etc/zsh /etc/zsh.old
 fi
 
 # Mover configuración de Bat
@@ -80,8 +85,6 @@ if [ -d /etc/bat ]; then
 else
     printf "No existe configuración de bat previa.\n\n"
 fi
-
-
 
 
 
