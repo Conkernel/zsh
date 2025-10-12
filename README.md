@@ -18,7 +18,7 @@ rm ~/.fzf/.git -rf
 
 sudo chown -R oloco:oloco /home/bash/.config/zsh
 
-chmod +x ~/.config/zsh/install.sh
+sudo chmod +x ~/.config/zsh/install.sh
 
 
 # -.-
