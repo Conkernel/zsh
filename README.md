@@ -20,9 +20,6 @@ sudo chown -R bash:bash /home/bash/.config/zsh
 
 sudo chmod +x ~/.config/zsh/install.sh
 
-
-# -.-
-
+#
 sudo ~/.config/zsh/install.sh
-
-# -.-
+#
