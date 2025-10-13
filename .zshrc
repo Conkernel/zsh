@@ -81,6 +81,7 @@ bindkey '^[[H'    beginning-of-line
 bindkey '^[[F'    end-of-line
 bindkey '^[[1;5C' forward-word
 bindkey '^[[1;5D' backward-word
+bindkey '^W' backward-kill-word # Borra la palabra completa hacia atrás con Ctrl+Backspace
 # bindkey '^[[3;5~' kill-word. Es posible que dé problemas en algunos casos.
 # Para buscar por el hisorial usando la tecla up o down (escribimos por ejemplo "cd /etc/" y pusamos arriba o abajo. Nos mostrará solo las entradas de hisorial que comienzan por cd /etc/...):
 autoload -Uz up-line-or-beginning-search
