@@ -52,7 +52,7 @@ SAVEHIST=5000 # Número de comandos almacenados en el HISTFILE
 #bindkey -e #funcionamiento tipo emacs
 bindkey '^H' backward-delete-char
 bindkey '^?' backward-kill-word
-# Las dos de arriba funcionan bien con mobaxterm, pero mal con bash
+# Las dos de arriba funcionan bien con mobaxterm/zsh, pero mal con mobaxterm/bash
 
 bindkey '^[[3~'   delete-char # borra caracter actual
 bindkey '^[[H'    beginning-of-line
