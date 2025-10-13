@@ -1,39 +1,15 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
-# Created by newuser for 5.9
+export TERM=xterm-256color
+
 source ~/powerlevel10k/powerlevel10k.zsh-theme
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-
-
-######.ZSHRC #######
-
 
 # Primero habilitamos las opciones con las que queremos que inicie zsh:
 source $ZDOTDIR/.zoptions
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh//.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-#source /opt/powerlevel10k/powerlevel10k.zsh-theme
-
-# To customize prompt, run `p10k configure` or edit ~/.config/zsh//.p10k.zsh.
-#[[ ! -f ~/.config/zsh//.p10k.zsh ]] || source ~/.config/zsh//.p10k.zsh
-
-
-
-
-
 
 
 
@@ -74,16 +50,16 @@ SAVEHIST=5000 # Número de comandos almacenados en el HISTFILE
 
 ### BINDKEYS ###
 #bindkey -e #funcionamiento tipo emacs
-bindkey '^H' backward-delete-char #es necesario activar el binding de ^H en la aplicación de terminal (mobaxterm)
-#bindkey '^?' backward-delete-word #teclas de control + retroceso borra la PALABRA previa. Funciona mal en ocasiones.
+bindkey '^H' backward-delete-char
+bindkey '^?' backward-kill-word
+# Las dos de arriba funcionan bien con mobaxterm, pero mal con bash
+
 bindkey '^[[3~'   delete-char # borra caracter actual
 bindkey '^[[H'    beginning-of-line
 bindkey '^[[F'    end-of-line
 bindkey '^[[1;5C' forward-word
 bindkey '^[[1;5D' backward-word
-bindkey '^W' backward-kill-word # Borra la palabra completa hacia atrás con Ctrl+Backspace
-# bindkey '^[[3;5~' kill-word. Es posible que dé problemas en algunos casos.
-# Para buscar por el hisorial usando la tecla up o down (escribimos por ejemplo "cd /etc/" y pusamos arriba o abajo. Nos mostrará solo las entradas de hisorial que comienzan por cd /etc/...):
+
 autoload -Uz up-line-or-beginning-search
 autoload -Uz down-line-or-beginning-search
 zle -N up-line-or-beginning-search
