@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# Función principal de detección
+detectar_distro() {
+    # 1. Método principal: Usar /etc/os-release (ESTÁNDAR MODERNO)
+    if [ -f "/etc/os-release" ]; then
+        # Carga las variables del archivo (NAME, ID, VERSION_ID, etc.)
+        . /etc/os-release
+        
+        # Convierte el ID a minúsculas para comparaciones consistentes
+        local ID_MINUSCULAS=$(echo "$ID" | tr '[:upper:]' '[:lower:]')
+        
+        # Comprobación de distribuciones específicas
+        case "$ID_MINUSCULAS" in
+            # Familias Debian
+            debian)
+                echo "Distribución: Debian"
+                ;;
+            ubuntu)
+                echo "Distribución: Ubuntu"
+                ;;
+            
+            # Familias Red Hat (RHEL, CentOS, Fedora)
+            rhel)
+                echo "Distribución: Red Hat Enterprise Linux (RHEL)"
+                ;;
+            centos)
+                echo "Distribución: CentOS"
+                ;;
+            
+            # Familia Arch
+            arch | archarm)
+                echo "Distribución: Arch Linux"
+                ;;
+            
+            # Si no coincide exactamente, muestra el nombre (ej. Mint, Pop!_OS)
+            *)
+                echo "Distribución (Base OS-RELEASE): $NAME $VERSION_ID"
+                ;;
+        esac
+        
+    # 2. Método de respaldo: Usar lsb_release (LEGADO)
+    elif command -v lsb_release &> /dev/null; then
+        echo "Distribución (Base LSB): $(lsb_release -ds)"
+
+    # 3. Método de último recurso: Archivos específicos
+    elif [ -f "/etc/redhat-release" ]; then
+        # Atrapa versiones muy antiguas de RHEL/CentOS
+        echo "Distribución (Base RedHat-release): $(cat /etc/redhat-release)"
+        
+    else
+        echo "Error: No se pudo detectar la distribución de Linux."
+    fi
+}
+
+detectar_distro
