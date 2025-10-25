@@ -11,8 +11,8 @@ alias grep='rg'
 # O usa un archivo ~/.ripgreprc para estas opciones
 
 # batcat:
-alias bat='batcat'
-alias cat='bat'
+#alias bat='batcat'
+#alias cat='bat'
 
 # exa:
 # Reemplazar ls con exa
