@@ -195,14 +195,15 @@ fi
 
 # Backup de zsh previo
 printf "Hacemos backup de la configuración previa de zsh del usuario...\n\n"
-rm -rf /home/$USUARIO_EJECUTOR/.config/zsh.old
-sudo mv /home/$USUARIO_EJECUTOR/.config/zsh /home/$USUARIO_EJECUTOR/.config/zsh.old
-
+if [ -d /home/$USUARIO_EJECUTOR/.fzf.old ]; then
+    rm -rf /home/$USUARIO_EJECUTOR/.config/zsh.old
+    sudo mv /home/$USUARIO_EJECUTOR/.config/zsh /home/$USUARIO_EJECUTOR/.config/zsh.old
+fi
 
 printf "Creando home para zsh...\n\n"
 sudo mkdir /home/$USUARIO_EJECUTOR/.config/zsh -p
 
-echo "" > ~/.zshrc
+echo "" > /home/$USUARIO_EJECUTOR/.zshrc
 
 
 git clone https://github.com/Conkernel/zsh.git /home/$USUARIO_EJECUTOR/.config/zsh
@@ -216,5 +217,6 @@ printf "Adecuando permisos para $USUARIO_EJECUTOR \n\n"
 sudo chown -R $USUARIO_EJECUTOR:$USUARIO_EJECUTOR /home/$USUARIO_EJECUTOR/
 
 
+exec su - "$USUARIO_EJECUTOR" -c "/bin/zsh"
 
 exit 0
