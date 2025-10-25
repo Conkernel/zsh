@@ -36,10 +36,13 @@ if [ "$USUARIO_EJECUTOR" == "root" ]; then
 else    
     # Método más robusto: usar getent passwd o ~ si estamos en el entorno del usuario
     # Pero para este caso simple, la ruta /home/ funciona si el usuario no es root.
-    HOMEDIR="$HOMEDIR"
+    HOMEDIR="/home/USUARIO_EJECUTOR"
 fi
 
 printf "HOMEDIR del usuario: %s\n\n" "$HOMEDIR"
+
+sleep 10
+
 
 # ==============================================================================
 # Detección del Sistema Operativo para la instalación de paquetes
