@@ -27,7 +27,7 @@ else
 fi
 
 printf "✅ Verificación de privilegios superada.\n\n"
-printf "Usuario original que lanzó el script: $USUARIO_EJECUTOR\n\n"
+printf "suario original que lanzó el script: $USUARIO_EJECUTOR\n\n"
 
 
 
