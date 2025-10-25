@@ -206,8 +206,9 @@ printf "Adecuando permisos para $USUARIO_EJECUTOR \n\n"
 
 printf "ruta $HOMEDIR \n\n"
 
-read -n 1 -s -r -p "Pulsa cualquier tecla para continuar..."
-echo
+read -p "Presiona Enter para continuar..."
+
+echo "usuario: USUARIO_EJECUTOR y ruta: HOMEDIR"
 
 sudo chown -R $USUARIO_EJECUTOR:$USUARIO_EJECUTOR $HOMEDIR/
 
