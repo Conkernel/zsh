@@ -27,7 +27,7 @@ else
 fi
 
 printf "✅ Verificación de privilegios superada.\n\n"
-printf "suario original que lanzó el script: $USUARIO_EJECUTOR\n\n"
+printf "Usuario original que lanzó el script: $USUARIO_EJECUTOR\n\n"
 
 
 
@@ -38,10 +38,6 @@ else
     # Pero para este caso simple, la ruta /home/ funciona si el usuario no es root.
     HOMEDIR="/home/$USUARIO_EJECUTOR"
 fi
-
-printf "HOMEDIR del usuario: $HOMEDIR"
-
-sleep 10
 
 
 # ==============================================================================
@@ -207,13 +203,12 @@ rm $HOMEDIR/.fzf/.git -rf
 # Permisos
 printf "Adecuando permisos para $USUARIO_EJECUTOR \n\n"
 
-printf "ruta $HOMEDIR \n\n"
-
-read -p "Presiona Enter para continuar..."
 
 echo "usuario: $USUARIO_EJECUTOR y ruta: $HOMEDIR"
 
-# sudo chown -R $USUARIO_EJECUTOR:$USUARIO_EJECUTOR $HOMEDIR/
+read -p "Presiona Enter para continuar..."
+
+sudo chown -R $USUARIO_EJECUTOR:$USUARIO_EJECUTOR $HOMEDIR/
 
 
 # exec su - "$USUARIO_EJECUTOR" -c "/bin/zsh"
