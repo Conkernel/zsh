@@ -208,7 +208,7 @@ printf "ruta $HOMEDIR \n\n"
 
 read -p "Presiona Enter para continuar..."
 
-echo "usuario: USUARIO_EJECUTOR y ruta: HOMEDIR"
+echo "usuario: $USUARIO_EJECUTOR y ruta: $HOMEDIR"
 
 # sudo chown -R $USUARIO_EJECUTOR:$USUARIO_EJECUTOR $HOMEDIR/
 
