@@ -9,42 +9,98 @@ fi
 # ==============================================================================
 # Detección del Sistema Operativo para la instalación de paquetes
 # ==============================================================================
-OS_NAME=""
-if [ -f /etc/os-release ]; then
-    . /etc/os-release
-    OS_NAME=$ID # ID es la variable que contiene el nombre de la distribución (debian, ubuntu, etc.)
-fi
+#!/bin/bash
 
-PACKAGE_FOR_LS="exa" # Valor por defecto
+# Función principal de detección
+detectar_distro() {
+    # 1. Método principal: Usar /etc/os-release (ESTÁNDAR MODERNO)
+    if [ -f "/etc/os-release" ]; then
+        # Carga las variables del archivo (NAME, ID, VERSION_ID, etc.)
+        . /etc/os-release
+        
+        # Convierte el ID a minúsculas para comparaciones consistentes
+        local ID_MINUSCULAS=$(echo "$ID" | tr '[:upper:]' '[:lower:]')
+        
+        # Comprobación de distribuciones específicas
+        case "$ID_MINUSCULAS" in
+            # Familias Debian
+            debian)
+                PACKAGE_FOR_LS="eza"
+                INSTALL="apt install -y"
+                echo $ID_MINUSCULAS
+                printf "Sistema detectado: Debian. Usando 'eza' para la instalación.\n\n"
+                ;;
+            ubuntu)
+                echo "Distribución: Ubuntu"
+                INSTALL="apt install -y"
+                echo $ID_MINUSCULAS
+                PACKAGE_FOR_LS="eza"
+                printf "Sistema detectado: Ubuntu. Usando 'eza' para la instalación.\n\n"
+                ;;
+            rhel)
+                PACKAGE_FOR_LS="eza"
+                INSTALL="dnf install -y"                
+                echo $ID_MINUSCULAS
+                printf "Sistema detectado: RedHat. Usando 'eza' para la instalación.\n\n"
+                ;;
+            centos)
+                echo $ID_MINUSCULAS
+                INSTALL="dnf install -y"                
+                ACKAGE_FOR_LS="eza"
+                printf "Sistema detectado: Centos. Usando 'eza' para la instalación.\n\n"
+                ;;
 
-case "$OS_NAME" in
-    debian)
-        PACKAGE_FOR_LS="exa"
-        printf "Sistema detectado: Debian. Usando 'exa' para la instalación.\n\n"
-        ;;
-    ubuntu)
-        PACKAGE_FOR_LS="eza"
-        printf "Sistema detectado: Ubuntu. Usando 'eza' para la instalación.\n\n"
-        ;;
-    *)
-        printf "Sistema no reconocido como Debian o Ubuntu. Usando 'exa' como predeterminado.\n\n"
-        ;;
-esac
+            arch | archarm)
+                echo $ID_MINUSCULAS
+                INSTALL="pacman -S --noconfirm"                
+                PACKAGE_FOR_LS="eza"
+                printf "Sistema detectado: Arch. Usando 'eza' para la instalación.\n\n"
+                ;;
+            
+            # Si no coincide exactamente, muestra el nombre (ej. Mint, Pop!_OS)
+            *)
+                echo "La distro es $ID_MINUSCULAS"
+                echo "Distribución (Base OS-RELEASE): $NAME $VERSION_ID"
+                exit
+                ;;
+        esac
+        
+    # 2. Método de respaldo: Usar lsb_release (LEGADO)
+    elif command -v lsb_release &> /dev/null; then
+        echo "Distribución (Base LSB): $(lsb_release -ds)"
+        exit
+
+    # 3. Método de último recurso: Archivos específicos
+    elif [ -f "/etc/redhat-release" ]; then
+        # Atrapa versiones muy antiguas de RHEL/CentOS
+        echo "Distribución (Base RedHat-release): $(cat /etc/redhat-release)"
+        INSTALL="apt install"                
+
+        
+    else
+        echo "Error: No se pudo detectar la distribución de Linux."
+        exit
+    fi
+}
+
+detectar_distro
+
+
 
 # ==============================================================================
 # Instalación de paquetes
 # ==============================================================================
 printf "Instalando paquetes esenciales...\n\n"
-sudo apt update -y # Asegurarse de que los índices de paquetes estén actualizados
+$INSTALL # Asegurarse de que los índices de paquetes estén actualizados
 
 # Construyendo la lista de paquetes dinámicamente
 APT_PACKAGES="zsh bat git curl xdg-utils ripgrep $PACKAGE_FOR_LS"
 
-sudo apt install $APT_PACKAGES -y
+$INSTALL $APT_PACKAGES
 
 # Verificar si la instalación de apt fue exitosa
 if [ $? -ne 0 ]; then
-    printf "ERROR: Falló la instalación de paquetes APT. Por favor, revisa los errores.\n\n" >&2
+    printf "ERROR: Falló la instalación de paquetes. Por favor, revisa los errores.\n\n" >&2
     exit 1
 fi
 
