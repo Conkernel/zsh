@@ -39,7 +39,7 @@ else
     HOMEDIR="/home/$USUARIO_EJECUTOR"
 fi
 
-printf "HOMEDIR del usuario: %s\n\n" "$HOMEDIR"
+printf "HOMEDIR del usuario: $HOMEDIR"
 
 sleep 10
 
