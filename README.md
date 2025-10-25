@@ -1,7 +1,7 @@
 Instrucciones
 
 ``` bash
-wget -O install.sh https://raw.githubusercontent.com/Conkernel/zsh/main/install.sh
+curl -sL https://raw.githubusercontent.com/Conkernel/zsh/main/install.sh | bash
 #
 sudo chmod +x ~/.config/zsh/install.sh
 #
