@@ -203,6 +203,8 @@ rm $HOMEDIR/.fzf/.git -rf
 
 # Permisos
 printf "Adecuando permisos para $USUARIO_EJECUTOR \n\n"
+printf "$HOMEDIR"
+pause
 sudo chown -R $USUARIO_EJECUTOR:$USUARIO_EJECUTOR $HOMEDIR/
 
 
