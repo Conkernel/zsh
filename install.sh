@@ -8,7 +8,7 @@
 if [ "$EUID" -ne 0 ]; then
     # Si no es root, muestra un error y sale
     echo "🚨 ERROR: Este script debe ejecutarse con privilegios de root (sudo)."
-    echo "Por favor, inténtalo de nuevo con: sudo $0"
+    echo "Por favor, inténtalo de nuevo con: $0"
     exit 1
 fi
 
@@ -55,7 +55,7 @@ detectar_distro() {
         # Convierte el ID a minúsculas para comparaciones consistentes
         local ID_MINUSCULAS=$(echo "$ID" | tr '[:upper:]' '[:lower:]')
         
-        
+
         # Comprobación de distribuciones específicas
         case "$ID_MINUSCULAS" in
             # Familias Debian
@@ -90,7 +90,7 @@ detectar_distro() {
                 ;;
 
             arch | archarm)
-                UPDATE="sudo pacman -Sy"
+                UPDATE="pacman -Sy"
                 echo $ID_MINUSCULAS
                 INSTALL="pacman -S --noconfirm"                
                 PACKAGE_FOR_LS="eza"
@@ -158,16 +158,16 @@ if [ -d /etc/zsh ]; then
     printf "Copia de seguridad de /etc/zsh en /etc/zsh.old... \n\n"
     if [ -d /etc/zsh.old ]; then
         printf "El directorio /etc/zsh.old ya existe. Eliminándolo para evitar conflictos.\n\n"
-        sudo rm -rf /etc/zsh.old
+        rm -rf /etc/zsh.old
     fi
-    sudo cp -R /etc/zsh /etc/zsh.old
+    cp -R /etc/zsh /etc/zsh.old
 else
     mkdir -p /etc/zsh
 fi
 
 # 
 
-sudo tee -a /etc/zsh/zshrc << 'EOF'
+tee -a /etc/zsh/zshrc << 'EOF'
 ZSH_ENV_USER="${HOME}/.config/zsh/.zshenv"
 if [ -f "$ZSH_ENV_USER" ]; then
     source "$ZSH_ENV_USER"
@@ -176,7 +176,7 @@ EOF
 
 # Crear ruta para fzf
 printf "Creando ruta local de fzf \n\n"
-sudo mkdir -p $HOMEDIR/.fzf
+mkdir -p $HOMEDIR/.fzf
 
 
 
@@ -184,7 +184,7 @@ sudo mkdir -p $HOMEDIR/.fzf
 printf "Moviendo configuración de Bat...\n\n"
 if [ -d /etc/bat ]; then
     printf "Copia de seguridad de /etc/bat en /etc/bat.old \n\n"
-    sudo mv -f /etc/bat /etc/bat.old
+    mv -f /etc/bat /etc/bat.old
 else
     printf "No existe configuración de bat previa.\n\n"
 fi
@@ -196,11 +196,11 @@ fi
 printf "Hacemos backup de la configuración previa de zsh del usuario...\n\n"
 if [ -d $HOMEDIR/.fzf.old ]; then
     rm -rf $HOMEDIR/.config/zsh.old
-    sudo mv $HOMEDIR/.config/zsh $HOMEDIR/.config/zsh.old
+    mv $HOMEDIR/.config/zsh $HOMEDIR/.config/zsh.old
 fi
 
 printf "Creando home para zsh...\n\n"
-sudo mkdir $HOMEDIR/.config/zsh -p
+mkdir $HOMEDIR/.config/zsh -p
 
 echo "" > $HOMEDIR/.zshrc
 
@@ -217,7 +217,7 @@ printf "Adecuando permisos para $USUARIO_EJECUTOR \n\n"
 
 echo "usuario: $USUARIO_EJECUTOR y ruta: $HOMEDIR"
 
-sudo chown -R $USUARIO_EJECUTOR:$USUARIO_EJECUTOR $HOMEDIR/
+chown -R $USUARIO_EJECUTOR:$USUARIO_EJECUTOR $HOMEDIR/
 
 
 # exec su - "$USUARIO_EJECUTOR" -c "/bin/zsh"
