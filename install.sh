@@ -55,6 +55,7 @@ detectar_distro() {
         # Convierte el ID a minúsculas para comparaciones consistentes
         local ID_MINUSCULAS=$(echo "$ID" | tr '[:upper:]' '[:lower:]')
         
+        
         # Comprobación de distribuciones específicas
         case "$ID_MINUSCULAS" in
             # Familias Debian
