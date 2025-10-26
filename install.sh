@@ -179,7 +179,6 @@ printf "Creando ruta local de fzf \n\n"
 mkdir -p $HOMEDIR/.fzf
 
 
-
 # Mover configuración de Bat
 printf "Moviendo configuración de Bat...\n\n"
 if [ -d /etc/bat ]; then
