@@ -61,6 +61,7 @@ detectar_distro() {
             debian)
                 PACKAGE_FOR_LS="eza"
                 INSTALL="apt install -y"
+                UPDATE="apt update"
                 echo $ID_MINUSCULAS
                 printf "Sistema detectado: Debian. Usando 'eza' para la instalación.\n\n"
                 ;;
@@ -68,23 +69,27 @@ detectar_distro() {
                 echo "Distribución: Ubuntu"
                 INSTALL="apt install -y"
                 echo $ID_MINUSCULAS
+                UPDATE="apt update"                
                 PACKAGE_FOR_LS="eza"
                 printf "Sistema detectado: Ubuntu. Usando 'eza' para la instalación.\n\n"
                 ;;
             rhel)
                 PACKAGE_FOR_LS="eza"
+                UPDATE="dns update"
                 INSTALL="dnf install -y"                
                 echo $ID_MINUSCULAS
                 printf "Sistema detectado: RedHat. Usando 'eza' para la instalación.\n\n"
                 ;;
             centos)
                 echo $ID_MINUSCULAS
+                UPDATE="dns update"                
                 INSTALL="dnf install -y"                
                 ACKAGE_FOR_LS="eza"
                 printf "Sistema detectado: Centos. Usando 'eza' para la instalación.\n\n"
                 ;;
 
             arch | archarm)
+                UPDATE="sudo pacman -Sy"
                 echo $ID_MINUSCULAS
                 INSTALL="pacman -S --noconfirm"                
                 PACKAGE_FOR_LS="eza"
@@ -124,6 +129,11 @@ detectar_distro
 # ==============================================================================
 # Instalación de paquetes
 # ==============================================================================
+
+
+printf "Actualizando repositorios...\n\n"
+$UPDATE
+
 printf "Instalando paquetes esenciales...\n\n"
 
 # Construyendo la lista de paquetes dinámicamente
