@@ -1,7 +1,7 @@
 
 export TERM=xterm-256color
 
-source ~/.powerlevel10k/powerlevel10k.zsh-theme
+source ~/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
 # Primero habilitamos las opciones con las que queremos que inicie zsh:
