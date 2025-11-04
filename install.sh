@@ -179,34 +179,27 @@ printf "Creando ruta local de fzf \n\n"
 mkdir -p $HOMEDIR/.fzf
 
 
-# Mover configuración de Bat
-printf "Moviendo configuración de Bat...\n\n"
-if [ -d /etc/bat ]; then
-    printf "Copia de seguridad de /etc/bat en /etc/bat.old \n\n"
-    mv -f /etc/bat /etc/bat.old
-else
-    printf "No existe configuración de bat previa.\n\n"
-fi
 
 
 
 
 # Backup de zsh previo
 printf "Hacemos backup de la configuración previa de zsh del usuario...\n\n"
-if [ -d $HOMEDIR/.fzf.old ]; then
+if [ -d $HOMEDIR/.config/zsh.old ]; then
     rm -rf $HOMEDIR/.config/zsh.old
     mv $HOMEDIR/.config/zsh $HOMEDIR/.config/zsh.old
 fi
 
-printf "Creando home para zsh...\n\n"
-mkdir $HOMEDIR/.config/zsh -p
+# printf "Creando home para zsh...\n\n"
+# mkdir $HOMEDIR/.config/zsh -p
 
 echo "" > $HOMEDIR/.zshrc
 
-
+log "Clonando config de zsh de repo de Conkernel..."
 git clone https://github.com/Conkernel/zsh.git $HOMEDIR/.config/zsh
 rm -rf $HOMEDIR/powerlevel10k
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOMEDIR/powerlevel10k
+echo 'source $HOMEDIR/powerlevel10k/powerlevel10k.zsh-theme' >>$HOMEDIR/.config/zsh/.zshrc
 rm $HOMEDIR/powerlevel10k/.git -rf
 rm $HOMEDIR/.fzf/.git -rf
 

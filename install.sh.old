@@ -1,0 +1,180 @@
+#!/bin/bash
+# set -x
+set -e  # Salir si hay error
+
+# --- Colores ---
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+log()   { echo -e "${GREEN}[INFO]${NC} $1"; }
+warn()  { echo -e "${YELLOW}[WARN]${NC} $1"; }
+error() { echo -e "${RED}[ERROR]${NC} $1" >&2; }
+info()  { echo -e "${BLUE}[INFO]${NC} $1"; }
+
+# --- Verificación de sistema ---
+if ! grep -q "Ubuntu 24.04" /etc/os-release 2>/dev/null; then
+    warn "Este script está diseñado para Ubuntu 24.04. Puede funcionar en otras versiones."
+fi
+
+log "Actualizando paquetes..."
+sudo apt update
+
+# --- Instalación de paquetes ---
+log "Instalando zsh, git y fuentes de powerline..."
+sudo apt install -y zsh git fonts-powerline
+
+# --- Directorios XDG ---
+ZDOTDIR="$HOME/.config/zsh"
+P10K_DIR="$HOME/.config/powerlevel10k"
+ZSH_CACHE="$HOME/.cache/zsh"
+
+
+mkdir -p "$ZDOTDIR" "$ZSH_CACHE" "$P10K_DIR"
+
+# --- Instalar Powerlevel10k (sin Oh My Zsh) ---
+log "Instalando Powerlevel10k en $P10K_DIR..."
+if [ ! -d "$P10K_DIR/.git" ]; then  # Verifica si es un repo Git válido
+    rm -rf "$P10K_DIR"  # Limpia si es incompleto
+    git clone --depth 1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
+else
+    log "Powerlevel10k ya está instalado. Actualizando..."
+    git -C "$P10K_DIR" pull
+fi
+
+
+
+
+
+log "Clonando config de zsh de repo de Conkernel..."
+if [ ! -d "$ZDOTDIR/.git" ]; then  # Verifica si es un repo Git válido
+    rm -rf "$ZDOTDIR"  # Limpia si es incompleto
+    git clone --depth 1 https://github.com/Conkernel/zsh.git "$ZDOTDIR"
+else
+    log "Powerlevel10k ya está instalado. Actualizando..."
+    git -C "$ZDOTDIR" pull
+fi
+
+
+
+
+
+
+
+
+
+
+
+cat > "$HOME/.zshenv" << EOF
+# ~/.zshenv - Cargado siempre
+export ZDOTDIR="$HOME/.config/zsh"
+[ -f "\$ZDOTDIR/.zshenv" ] && source "\$ZDOTDIR/.zshenv"
+EOF
+log "Creado ~/.zshenv → apunta a \$ZDOTDIR"
+
+
+
+
+
+# --- .zshenv (en XDG) ---
+# cat > "$ZDOTDIR/.zshenv" << 'EOF'
+# # ~/.config/zsh/.zshenv - Variables de entorno
+
+# # XDG Base Directory
+# export XDG_CONFIG_HOME="$HOME/.config"
+# export XDG_CACHE_HOME="$HOME/.cache"
+# export XDG_DATA_HOME="$HOME/.local/share"
+
+# # Zsh
+# export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
+# mkdir -p "$ZSH_CACHE_DIR"
+
+# # Historial
+# export HISTFILE="$ZSH_CACHE_DIR/history"
+# export HISTSIZE=10000
+# export SAVEHIST=10000
+# EOF
+# log "Creado ~/.config/zsh/.zshenv con variables XDG"
+
+# # --- .zshrc (en XDG) ---
+# cat > "$ZDOTDIR/.zshrc" << 'EOF'
+# # ~/.config/zsh/.zshrc
+
+# # Solo en modo interactivo
+# [[ $- != *i* ]] && return
+
+# # === Powerlevel10k ===
+# source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
+
+# # Configuración de p10k (se generará en el primer inicio)
+# [[ ! -f ~/.config/p10k.zsh ]] || source ~/.config/p10k.zsh
+
+# # === Opciones de Zsh ===
+# setopt HIST_IGNORE_DUPS
+# setopt HIST_IGNORE_SPACE
+# setopt HIST_SAVE_BY_COPY
+# setopt SHARE_HISTORY
+# setopt AUTO_CD
+# setopt CORRECT
+# setopt PROMPT_SUBST
+
+# # === Completado ===
+# autoload -Uz compinit
+# compinit -d "$ZSH_CACHE_DIR/zcompdump"
+
+# # === Aliases ===
+# alias ll='ls -lah --color=auto'
+# alias update='sudo apt update && sudo apt upgrade -y'
+# alias grep='grep --color=auto'
+# alias ..='cd ..'
+
+# # === Variables de entorno adicionales ===
+# export EDITOR=nano
+# export VISUAL=nano
+
+# # === Mensaje de bienvenida (opcional) ===
+# # echo "Bienvenido a zsh + Powerlevel10k (XDG-compliant)"
+# EOF
+# log "Creado ~/.config/zsh/.zshrc con aliases y opciones"
+
+# --- Archivo p10k.zsh (placeholder) ---
+# P10K_CONFIG="$HOME/.config/p10k.zsh"
+# if [ ! -f "$P10K_CONFIG" ]; then
+#     log "Se creará la configuración de Powerlevel10k en el primer inicio..."
+#     echo "# Configuración de Powerlevel10k (generada por p10k configure)" > "$P10K_CONFIG"
+# fi
+
+# --- Cambiar shell por defecto ---
+CURRENT_SHELL="$SHELL"
+ZSH_PATH="$(which zsh)"
+if [[ "$CURRENT_SHELL" != "$ZSH_PATH" ]]; then
+    log "Cambiando shell por defecto a zsh..."
+    sudo chsh -s "$ZSH_PATH" "$USER"
+    log "Shell cambiado. Reinicia la terminal o ejecuta: exec zsh"
+else
+    log "zsh ya es tu shell por defecto."
+fi
+
+# --- Mensaje final ---
+echo
+echo -e "${GREEN}Instalación completada con éxito${NC}"
+echo
+echo -e "${BLUE}Estructura de configuración (XDG):${NC}"
+echo "   ~/.zshenv              → apunta a ~/.config/zsh"
+echo "   ~/.config/zsh/.zshenv  → variables de entorno"
+echo "   ~/.config/zsh/.zshrc   → configuración principal"
+echo "   ~/.config/p10k.zsh     → configuración de Powerlevel10k (tras p10k configure)"
+echo "   ~/.config/powerlevel10k/ → tema"
+echo
+echo -e "${BLUE}Pasos siguientes:${NC}"
+echo "   1. Cierra y abre la terminal, o ejecuta: ${YELLOW}exec zsh${NC}"
+echo "   2. Se iniciará el asistente: ${YELLOW}p10k configure${NC} (elige tu estilo)"
+echo "   3. ¡Disfruta de zsh limpio y rápido!"
+echo
+echo -e "${BLUE}Aliases incluidos:${NC}"
+echo "   ll     → ls -lah con color"
+echo "   update → apt update + upgrade"
+echo "   ..     → cd .."
+echo
