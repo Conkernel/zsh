@@ -1,25 +1,59 @@
-alias gc='git commmit'
+# Git y Control de Versiones
 alias gcm='git commit -m'
+alias g='git'                           # Alias base para Git
+alias gs='git status'                   # Muestra el estado del repositorio
+alias ga='git add .'                    # Añade todos los archivos modificados
+alias gc='git commit -v'                # Inicia un commit detallado con editor
+alias gp='git push'                     # Sube los commits al remoto
+alias gl='git log --oneline --decorate --graph' # Historial de commits compacto y visual
+
+# Navegación y Archivos
+alias ls='exa' # Alias para listado largo (l)
+alias ll='exa -la --header --git --icons --group-directories-first' # Alias para listado largo con todos los archivos (la)
+alias la='exa -la --header --git --icons --group-directories-first' # Alias para vista de árbol (lt)
+alias lt='exa -T'
+alias ll='ls -alF'                      # Listado largo (detallado) y con archivos ocultos
+alias la='ls -A'                        # Listado de todos los archivos excepto . y ..
+alias cc='clear'                       # Limpia la pantalla (útil para migrados de Windows)
+alias ..='cd ..'                        # Sube un nivel de directorio
+alias ...='cd ../..'                    # Sube dos niveles de directorio
+alias cp='cp -i'                        # Copia archivos, pide confirmación si sobrescribe
+alias mv='mv -i'                        # Mueve archivos, pide confirmación si sobrescribe
+alias rm='rm -i'                        # Elimina archivos, pide confirmación antes de borrar (SEGURIDAD)
+alias mkdir='mkdir -p'                  # Crea directorios y sus padres si no existen
 
 # Ripgrep (grep vitaminado)
-# Alias para ripgrep (opcional, si quieres atajos)
 alias rg='rg --color=auto' # Asegura colores siempre
 alias rgl='rg --files-with-matches' # Listar archivos con coincidencias
 alias rgp='rg --pretty' # Salida bonita
 alias grep='rg'
-# Configuración por defecto de ripgrep (opcional, si usas .ripgreprc no es necesario aquí)
-# O usa un archivo ~/.ripgreprc para estas opciones
+
+# Gestión de Paquetes (Ubuntu/Debian)
+alias update='sudo apt update'          # Actualiza la lista de paquetes
+alias upgrade='sudo apt upgrade -y'     # Descarga e instala todas las actualizaciones sin confirmación
+alias install='sudo apt install'        # Alias simple para instalar paquetes
+alias remove='sudo apt autoremove --purge' # Elimina paquetes y sus archivos de configuración
+alias clean='sudo apt clean'            # Limpia el caché de paquetes descargados
 
 # batcat:
 #alias bat='batcat'
 #alias cat='bat'
 
-# exa:
-# Reemplazar ls con exa
-alias ls='exa'
-# Alias para listado largo (l)
-alias ll='exa -la --header --git --icons --group-directories-first'
-# Alias para listado largo con todos los archivos (la)
-alias la='exa -la --header --git --icons --group-directories-first'
-# Alias para vista de árbol (lt)
-alias lt='exa -T'
+
+# SISTEMA
+alias h=history
+alias psa="ps aux"
+alias df="df -h"
+alias duf="du -h --max-depth=1"
+alias tree="tree -C"
+
+# Utilidades de Sistema
+alias h='history'                       # Muestra el historial de comandos
+alias hgr='history | grep'              # Busca rápidamente en el historial (ej: hgr docker)
+alias ip='ip a'                         # Muestra direcciones IP y configuración de interfaces de red
+alias ports='sudo ss -tulpn'            # Muestra todos los puertos abiertos (sustituto de netstat)
+alias psa='ps aux'                      # Muestra todos los procesos en ejecución
+alias df='df -h'                        # Muestra el espacio libre en disco en formato legible
+alias duf='du -h --max-depth=1'         # Muestra el uso de disco por subdirectorio (resumido)
+alias tree='tree -C'                    # Muestra la estructura de directorios en formato árbol (Requiere 'tree')
+
