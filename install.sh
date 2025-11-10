@@ -43,7 +43,7 @@ detectar_distro() {
         case "$ID_MINUSCULAS" in
             # Familias Debian
             debian)
-                PACKAGE_FOR_LS="eza"
+                PACKAGE_FOR_LS="exa"
                 INSTALL="apt install -y"
                 UPDATE="apt update"
                 echo $ID_MINUSCULAS
