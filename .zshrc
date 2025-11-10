@@ -50,13 +50,32 @@ SAVEHIST=5000 # Número de comandos almacenados en el HISTFILE
 
 ### BINDKEYS ###
 #bindkey -e #funcionamiento tipo emacs
-bindkey '^H' backward-delete-char
+#bindkey '^H' backward-delete-char
 #bindkey '^?' backward-kill-word
 # Las dos de arriba funcionan bien con mobaxterm/zsh, pero mal con mobaxterm/bash
 
 bindkey '^[[3~'   delete-char # borra caracter actual
-bindkey '^[[H'    beginning-of-line
-bindkey '^[[F'    end-of-line
+
+# --- FIX teclas Home y End en Tabby ---
+# Desactivar modo de cursor de aplicación
+function zle-line-init() {
+  echoti rmkx        # Disable application cursor mode
+}
+function zle-line-finish() {
+  echoti smkx        # Re-enable if needed
+}
+zle -N zle-line-init
+zle -N zle-line-finish
+
+# Mapear secuencias estándar de teclas
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+bindkey '^[OH' beginning-of-line
+bindkey '^[OF' end-of-line
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[4~' end-of-line
+
+
 bindkey '^[[1;5C' forward-word
 bindkey '^[[1;5D' backward-word
 
@@ -111,48 +130,6 @@ watch=(notme)         # watch for everybody but me
 LOGCHECK=30           # check every 60 sec for login/logout activity
 WATCHFMT="%n %a %l desde %m el $(date +"%A %d de %B de %Y a las %T")"
 
-
-# Auto logout (1 hora)
-# Cuando se bloquea una terminal virtual, no es capaz de aceptar la contraseña. Revisar opciones para vlock antes de volver a habilitarlo.
-#TMOUT=3600
-#TRAPALRM () {
-#  clear
-#  echo Inactivity timeout on $TTY
-#  echo
-#  vlock -c
-#  echo
-#  echo Terminal unlocked. [ Press Enter ]
-#}
-
-
-
-# Cada vez que se intenta ejecutar un comando que no está instalado, realiza una búsqueda con "pacman -F" y devuelve el paquete que contiene ese comando
-function command_not_found_handler {
-    local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
-    printf 'zsh: command not found: %s\n' "$1"
-    local entries=(
-        ${(f)"$(/usr/bin/pacman -F --machinereadable -- "/usr/bin/$1")"}
-    )
-    if (( ${#entries[@]} ))
-    then
-        printf "${bright}$1${reset} may be found in the following packages:\n"
-        local pkg
-        for entry in "${entries[@]}"
-        do
-            # (repo package version file)
-            local fields=(
-                ${(0)entry}
-            )
-            if [[ "$pkg" != "${fields[2]}" ]]
-            then
-                printf "${purple}%s/${bright}%s ${green}%s${reset}\n" "${fields[1]}" "${fields[2]}" "${fields[3]}"
-            fi
-            printf '    /%s\n' "${fields[4]}"
-            pkg="${fields[2]}"
-        done
-    fi
-    return 127
-}
 
 
 #este código define un alias para abrir archivos HTML y HTM usando un navegador web. Cuando intenta abrir un archivo de este tipo, se activa la función pick-web-browseralias, que presumiblemente se encarga de seleccionar y abrir el navegador adecuado:
@@ -231,4 +208,5 @@ source $ZDOTDIR/.zaliases
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+
 
