@@ -26,7 +26,7 @@ alias mkdir='mkdir -p'                  # Crea directorios y sus padres si no ex
 alias rg='rg --color=auto' # Asegura colores siempre
 alias rgl='rg --files-with-matches' # Listar archivos con coincidencias
 alias rgp='rg --pretty' # Salida bonita
-alias grep='rg'
+<!-- alias grep='rg' -->
 
 # Gestión de Paquetes (Ubuntu/Debian)
 alias update='sudo apt update'          # Actualiza la lista de paquetes
