@@ -1,5 +1,7 @@
 
 export TERM=xterm-256color
+export LANGUAGE=es_ES:en_US:en_GB
+export LANG=es_ES.UTF-8
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
