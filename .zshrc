@@ -44,17 +44,16 @@ for func in $^fpath/*(N-.x:t); autoload $func
 
 ### History ###
 export HISTFILE=~/.config/zsh/.zhistory # Rutadel fichero de historial
-export HISTSIZE=1000000000    # Comandos en memoria (casi ilimitado)
-export SAVEHIST=1000000000    # Comandos guardados en disco (casi ilimitado)
+export HISTSIZE=1000000000
+export SAVEHIST=1000000000
 export HIST_EXPIRE_DUPLICATES_FIRST=false
-unset HISTEXPIRE # No borrar nunca por tamaño (desactiva expiración por límite)
-# Opcional: no guardar comandos duplicados consecutivos
+unset HISTEXPIRE
 setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_ALL_DUPS   # Elimina duplicados antiguos
+setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_SAVE_NO_DUPS
 setopt EXTENDED_HISTORY
-setopt SHARE_HISTORY          # Comparte historial entre sesiones
-setopt INC_APPEND_HISTORY     # Añade comandos inmediatamente
+setopt SHARE_HISTORY  
+setopt INC_APPEND_HISTORY
 ###############
 
 
