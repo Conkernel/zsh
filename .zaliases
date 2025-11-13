@@ -46,6 +46,7 @@ alias psa="ps aux"
 alias df="df -h"
 alias duf="du -h --max-depth=1"
 alias tree="tree -C"
+alias nn="nvim"
 
 # Utilidades de Sistema
 alias h='history'                       # Muestra el historial de comandos
