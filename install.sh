@@ -55,7 +55,7 @@ detectar_distro() {
                 echo $ID_MINUSCULAS
                 UPDATE="apt update"                
                 PACKAGE_FOR_LS="eza"
-                printf "Sistema detectado: Ubuntu. Usando 'exa' para la instalación.\n\n"
+                printf "Sistema detectado: Ubuntu. Usando 'eza' para la instalación.\n\n"
                 ;;
             rhel)
                 PACKAGE_FOR_LS="eza"
